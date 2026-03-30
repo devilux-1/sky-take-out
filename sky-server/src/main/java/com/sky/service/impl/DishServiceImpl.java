@@ -19,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -116,4 +117,11 @@ public class DishServiceImpl implements DishService {
             dishFlavorMapper.saveWithFlavor(flavors);
         }
     }
+
+    @Override
+    public List<Dish> getDishByCategoryId(@RequestParam Long categoryId) {
+        List<Dish> dishList = dishMapper.selectByCategoryId(categoryId);
+        return dishList;
+    }
+
 }
