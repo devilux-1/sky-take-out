@@ -9,6 +9,17 @@
     </insert>
 
 
+    <update id="update">
+        update setmeal set
+        <if test="categoryId != null">category_id = #{categoryId},</if>
+        <if test="name != null">name = #{name},</if>
+        <if test="price != null">price = #{price},</if>
+        <if test="description != null">description = #{description},</if>
+        create_time = #{createTime},update_time = #{updateTime},create_user = #{createUser},update_user = #{updateUser}
+        where id = #{id}
+    </update>
+
+
     <select id="page" resultType="com.sky.vo.SetmealVO">
         select s.*,c.name categoryName from setmeal s left join category c on s.category_id = c.id
         <where>

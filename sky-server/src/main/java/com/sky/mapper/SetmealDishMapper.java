@@ -12,6 +12,7 @@ import java.util.List;
 
 @Mapper
 public interface SetmealDishMapper {
+
     @Select("select setmeal_id from setmeal_dish where id = #{id}")
     Long querySetmealId(Long id);
 
@@ -19,4 +20,7 @@ public interface SetmealDishMapper {
 
     @Delete("delete from setmeal_dish where setmeal_id = #{setmealId}")
     void delete(Long setmealId);
+
+    @Select("select * from setmeal_dish where setmeal_id = #{id}")
+    List<SetmealDish> getById(Long id);
 }
