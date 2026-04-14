@@ -26,4 +26,6 @@ public interface OrderService {
      * @param outTradeNo
      */
     void paySuccess(String outTradeNo);
+
+    void cancelOrder(Long id) throws Exception;
 }

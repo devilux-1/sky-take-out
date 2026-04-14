@@ -203,4 +203,34 @@ public class OrderServiceImpl implements OrderService {
         orderMapper.update(orders);
     }
 
+    @Override
+    public void cancelOrder(Long id) throws Exception {
+        //查询订单的状态
+        Orders orders = orderMapper.getById(id);
+
+        //若订单不为待支付和待接单状态，则直接报错
+        if(orders.getStatus() > 2){
+            throw new OrderBusinessException(MessageConstant.ORDER_STATUS_ERROR);
+        }
+
+        //若订单为待接单状态，则给用户退款,并将支付状态改为已退款
+        if(orders.getStatus() == 2){
+            //调用微信支付退款接口
+            weChatPayUtil.refund(
+                    orders.getNumber(), //商户订单号
+                    orders.getNumber(), //商户退款单号
+                    new BigDecimal(0.01),//退款金额，单位 元
+                    new BigDecimal(0.01));//原订单金额
+
+            orders.setPayStatus(Orders.REFUND);
+            orderMapper.update(orders);
+        }
+
+        //更新订单状态，取消时间，取消原因
+        orders.setStatus(Orders.CANCELLED);
+        orders.setCancelReason("用户取消");
+        orders.setCancelTime(LocalDateTime.now());
+        orderMapper.update(orders);
+    }
+
 }

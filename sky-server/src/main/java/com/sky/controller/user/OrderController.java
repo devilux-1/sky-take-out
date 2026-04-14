@@ -55,4 +55,12 @@ public class OrderController {
         log.info("生成预支付交易单：{}", orderPaymentVO);
         return Result.success(orderPaymentVO);
     }
+
+    @PutMapping("/cancel/{id}")
+    @ApiOperation("取消订单")
+    public Result cancelOrder(@PathVariable Long id) throws Exception {
+        log.info("正在取消订单,订单id为：{}",id);
+        orderService.cancelOrder(id);
+        return Result.success();
+    }
 }
