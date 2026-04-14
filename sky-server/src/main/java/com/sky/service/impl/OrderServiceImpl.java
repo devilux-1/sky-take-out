@@ -41,6 +41,10 @@ public class OrderServiceImpl implements OrderService {
     private ShoppingCartMapper shoppingCartMapper;
     @Autowired
     private AddressBookMapper addressBookMapper;
+    @Autowired
+    private UserMapper userMapper;
+    @Autowired
+    private WeChatPayUtil weChatPayUtil;
 
     //用户下单
     @Override
@@ -147,10 +151,6 @@ public class OrderServiceImpl implements OrderService {
         return orderVO;
     }
 
-    @Autowired
-    private UserMapper userMapper;
-    @Autowired
-    private WeChatPayUtil weChatPayUtil;
     /**
      * 订单支付
      *
@@ -231,6 +231,25 @@ public class OrderServiceImpl implements OrderService {
         orders.setCancelReason("用户取消");
         orders.setCancelTime(LocalDateTime.now());
         orderMapper.update(orders);
+    }
+
+    @Override
+    public void repetition(Long id) {
+        //查询当前用户id
+        Long userId = BaseContext.getCurrentId();
+
+        //查询该用户的订单详情
+        List<OrderDetail> orderDetailList = orderDetailMapper.getByOrderId(id);
+
+        ShoppingCart shoppingCart = new ShoppingCart();
+        //将订单详情赋值给购物车
+        //将订单详情批量添加到购物车
+        for(OrderDetail orderDetail: orderDetailList){
+            BeanUtils.copyProperties(orderDetail,shoppingCart);
+            shoppingCart.setCreateTime(LocalDateTime.now());
+            shoppingCart.setUserId(userId);
+            shoppingCartMapper.add(shoppingCart);
+        }
     }
 
 }

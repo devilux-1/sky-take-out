@@ -28,4 +28,6 @@ public interface OrderService {
     void paySuccess(String outTradeNo);
 
     void cancelOrder(Long id) throws Exception;
+
+    void repetition(Long id);
 }
