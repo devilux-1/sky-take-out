@@ -48,15 +48,15 @@
 
 2. 克隆项目
 
-git clone https://github.com/your-username/cangqiong-waimai.git
-cd cangqiong-waimai
+git clone https://github.com/devilux-1/sky-take-out.git
+cd sky-take-out
 
 
 3. 初始化数据库
 
 • 执行 sky-server/src/main/resources/sql/init.sql（或按项目说明导入）
 
-• 确保 MySQL 数据库名为 cangqiong_waimai
+• 确保 MySQL 数据库名为 sky-take-out
 
 4. 启动后端服务
 
@@ -146,7 +146,7 @@ sky-server 工作台模块功能开发、后端核心逻辑
 
 • 邮箱：3259300377@qq.com
 
-• 项目主页：https://github.com/your-username/cangqiong-waimai
+• 项目主页：https://github.com/devilux-1/sky-take-out
 
 🌈 致谢
 
